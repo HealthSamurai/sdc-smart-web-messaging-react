@@ -6,7 +6,7 @@ import type {
   SmartWebMessagingEvent,
   SmartWebMessagingRequest,
   SmartWebMessagingResponse,
-} from "sdc-swm-protocol/src";
+} from "sdc-smart-web-messaging";
 
 export type AnyOutgoingMessage =
   | SmartWebMessagingRequest<unknown>

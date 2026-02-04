@@ -1,15 +1,13 @@
-import type { OperationOutcome, OperationOutcomeIssue } from "./fhir";
-
 export type StatusPayload = {
   status: "success" | "error";
-  outcome?: OperationOutcome;
+  outcome?: fhir4.OperationOutcome;
 };
 
 export function buildOutcome(
-  severity: OperationOutcomeIssue["severity"],
-  code: OperationOutcomeIssue["code"],
+  severity: fhir4.OperationOutcomeIssue["severity"],
+  code: fhir4.OperationOutcomeIssue["code"],
   diagnostics: string,
-): OperationOutcome {
+): fhir4.OperationOutcome {
   return {
     resourceType: "OperationOutcome",
     issue: [

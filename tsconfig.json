@@ -12,7 +12,7 @@
     "types": ["@types/fhir"],
     "baseUrl": ".",
     "paths": {
-      "sdc-swm-protocol/src": ["vendor/sdc-smart-web-messaging/src/index.ts"]
+      "sdc-smart-web-messaging": ["vendor/sdc-smart-web-messaging/src/index.ts"]
     }
   },
   "include": ["src"]

@@ -6,7 +6,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "sdc-smart-web-messaging-react": resolve(__dirname, "../src/index.ts"),
-      "sdc-swm-protocol/src": resolve(
+      "sdc-smart-web-messaging": resolve(
         __dirname,
         "../vendor/sdc-smart-web-messaging/src/index.ts",
       ),

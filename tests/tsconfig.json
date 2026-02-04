@@ -6,7 +6,7 @@
     "baseUrl": "..",
     "paths": {
       "sdc-smart-web-messaging-react": ["src/index.ts"],
-      "sdc-swm-protocol/src": ["vendor/sdc-smart-web-messaging/src/index.ts"]
+      "sdc-smart-web-messaging": ["vendor/sdc-smart-web-messaging/src/index.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

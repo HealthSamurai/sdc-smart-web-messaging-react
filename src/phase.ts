@@ -1,4 +1,4 @@
-import type { SdcMessageType } from "sdc-swm-protocol/src";
+import type { SdcMessageType } from "sdc-smart-web-messaging";
 
 export enum SmartMessagingPhase {
   Disabled = -1,

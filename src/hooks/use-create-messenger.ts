@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import type { MutableRefObject } from "react";
-import { isRequest, isResponse } from "sdc-swm-protocol/src";
+import { isRequest, isResponse } from "sdc-smart-web-messaging";
 import { createMessenger } from "../transport";
 
 import {IncomingMessage} from "../types";

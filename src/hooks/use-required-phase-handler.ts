@@ -1,6 +1,6 @@
 import type { MutableRefObject } from "react";
 import { useMemo } from "react";
-import type { SdcMessageType } from "sdc-swm-protocol/src";
+import type { SdcMessageType } from "sdc-smart-web-messaging";
 import { buildOutcome } from "../outcome";
 import { REQUIRED_PHASE_BY_MESSAGE, SmartMessagingPhase, isAtLeastPhase } from "../phase";
 import type { createMessenger } from "../transport";

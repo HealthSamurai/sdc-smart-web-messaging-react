@@ -15,11 +15,11 @@
     }
   },
   "files": [
-    "dist",
-    "vendor/sdc-smart-web-messaging/src"
+    "dist"
   ],
   "scripts": {
     "build": "vite build",
+    "postbuild": "mkdir -p dist/LICENSES && cp vendor/sdc-smart-web-messaging/LICENSE dist/LICENSES/bsd-3-clause.txt",
     "dev": "vite",
     "lint": "biome check .",
     "test:browser": "playwright test",

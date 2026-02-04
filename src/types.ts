@@ -5,8 +5,7 @@ import type {
   SdcRequestExtractRequest,
   SdcRequestExtractResponse,
   SdcUiChangedFocusPayload,
-} from "sdc-swm-protocol/src";
-import type { Questionnaire, QuestionnaireResponse } from "./fhir";
+} from "sdc-smart-web-messaging";
 import type {SmartMessagingPhase} from "./phase";
 
 export type UseSmartMessagingOptions = {
@@ -32,12 +31,12 @@ export type SmartMessagingError = {
 };
 
 export type UseSmartMessagingResult = {
-  questionnaire: Questionnaire | null;
-  questionnaireResponse: QuestionnaireResponse | null;
+  questionnaire: fhir4.Questionnaire | null;
+  questionnaireResponse: fhir4.QuestionnaireResponse | null;
   context: QuestionnaireContext | null;
   config: SdcConfigureRequest["payload"] | null;
   phase: SmartMessagingPhase;
-  onQuestionnaireResponseChange: (response: QuestionnaireResponse) => void;
+  onQuestionnaireResponseChange: (response: fhir4.QuestionnaireResponse) => void;
   onFocusChange: (payload: SdcUiChangedFocusPayload) => void;
 };
 

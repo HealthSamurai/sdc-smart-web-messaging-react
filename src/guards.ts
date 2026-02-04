@@ -5,22 +5,21 @@ import type {
   SdcConfigureRequest,
   SdcDisplayQuestionnaireRequest,
   SdcDisplayQuestionnaireResponseRequest,
-} from "sdc-swm-protocol/src";
-import type { Questionnaire, QuestionnaireResponse } from "./fhir";
+} from "sdc-smart-web-messaging";
 
 export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
-export function isQuestionnaire(value: unknown): value is Questionnaire {
+export function isQuestionnaire(value: unknown): value is fhir4.Questionnaire {
   return isRecord(value) && value.resourceType === "Questionnaire";
 }
 
-export function isQuestionnaireResponse(value: unknown): value is QuestionnaireResponse {
+export function isQuestionnaireResponse(value: unknown): value is fhir4.QuestionnaireResponse {
   return isRecord(value) && value.resourceType === "QuestionnaireResponse";
 }
 
-export function resolveQuestionnaire(payload: unknown) {
+export function resolveQuestionnaire(payload: unknown): fhir4.Questionnaire | null {
   if (!isRecord(payload)) return null;
   if (isQuestionnaire(payload)) return payload;
   const candidate = payload.questionnaire;
@@ -28,7 +27,7 @@ export function resolveQuestionnaire(payload: unknown) {
   return null;
 }
 
-export function resolveQuestionnaireResponse(payload: unknown) {
+export function resolveQuestionnaireResponse(payload: unknown): fhir4.QuestionnaireResponse | null {
   if (!isRecord(payload)) return null;
   if (isQuestionnaireResponse(payload)) return payload;
   const candidate = payload.questionnaireResponse;
@@ -84,7 +83,7 @@ export function isSdcConfigureContextPayload(
   return true;
 }
 
-type DisplayQuestionnairePayload = SdcDisplayQuestionnaireRequest["payload"] | Questionnaire;
+type DisplayQuestionnairePayload = SdcDisplayQuestionnaireRequest["payload"] | fhir4.Questionnaire;
 
 export function isDisplayQuestionnairePayload(
   value: unknown,
@@ -108,7 +107,7 @@ export function isDisplayQuestionnairePayload(
 
 type DisplayQuestionnaireResponsePayload =
   | SdcDisplayQuestionnaireResponseRequest["payload"]
-  | QuestionnaireResponse;
+  | fhir4.QuestionnaireResponse;
 
 export function isDisplayQuestionnaireResponsePayload(
   value: unknown,

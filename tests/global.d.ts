@@ -1,6 +1,5 @@
-import type { QuestionnaireContext, SdcConfigureRequest, SdcUiChangedFocusPayload } from "sdc-swm-protocol/src";
-import type { SmartMessagingPhase } from "../src/phase";
-import type { Questionnaire, QuestionnaireResponse } from "../src/fhir";
+import type {QuestionnaireContext, SdcConfigureRequest, SdcUiChangedFocusPayload,} from "sdc-smart-web-messaging-react";
+import type {SmartMessagingPhase} from "../src/phase";
 
 type HostMessage = {
   messageType?: string;
@@ -17,8 +16,8 @@ type HostApi = {
 };
 
 type RendererState = {
-  questionnaire: Questionnaire | null;
-  questionnaireResponse: QuestionnaireResponse | null;
+  questionnaire: fhir4.Questionnaire | null;
+  questionnaireResponse: fhir4.QuestionnaireResponse | null;
   context: QuestionnaireContext | null;
   config: SdcConfigureRequest["payload"] | null;
   phase: SmartMessagingPhase;
@@ -26,7 +25,7 @@ type RendererState = {
 };
 
 type RendererActions = {
-  onQuestionnaireResponseChange: (response: QuestionnaireResponse) => void;
+  onQuestionnaireResponseChange: (response: fhir4.QuestionnaireResponse) => void;
   onFocusChange: (payload: SdcUiChangedFocusPayload) => void;
 };
 

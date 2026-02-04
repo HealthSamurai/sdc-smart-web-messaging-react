@@ -1,12 +1,12 @@
-import { useMemo } from "react";
-import type { MutableRefObject } from "react";
+import type {MutableRefObject} from "react";
+import {useMemo} from "react";
 import type {
   QuestionnaireContext,
   SdcMessageType,
   SdcRequestCurrentQuestionnaireResponseResponse,
   SdcRequestExtractRequest,
-} from "sdc-swm-protocol/src";
-import { mergeContext } from "../context";
+} from "sdc-smart-web-messaging";
+import {mergeContext} from "../context";
 import {
   getContextFromPayload,
   isDisplayQuestionnairePayload,
@@ -17,10 +17,9 @@ import {
   resolveQuestionnaire,
   resolveQuestionnaireResponse,
 } from "../guards";
-import { buildOutcome } from "../outcome";
-import { SmartMessagingPhase } from "../phase";
-import type { createMessenger } from "../transport";
-import type { Questionnaire, QuestionnaireResponse } from "../fhir";
+import {buildOutcome} from "../outcome";
+import {SmartMessagingPhase} from "../phase";
+import type {createMessenger} from "../transport";
 import type {IncomingMessage, UseSmartMessagingOptions, UseSmartMessagingResult} from "../types";
 
 type Handler = (message: IncomingMessage) => void;
@@ -30,13 +29,13 @@ type UseHandlerParams = {
   optionsRef: MutableRefObject<UseSmartMessagingOptions>;
   phaseRef: MutableRefObject<SmartMessagingPhase>;
   contextRef: MutableRefObject<QuestionnaireContext | null>;
-  questionnaireRef: MutableRefObject<Questionnaire | null>;
-  responseRef: MutableRefObject<QuestionnaireResponse | null>;
+  questionnaireRef: MutableRefObject<fhir4.Questionnaire | null>;
+  responseRef: MutableRefObject<fhir4.QuestionnaireResponse | null>;
   messenger: Messenger | null;
   setConfig: (value: UseSmartMessagingResult["config"]) => void;
   setContext: (value: QuestionnaireContext | null) => void;
-  setQuestionnaire: (value: Questionnaire | null) => void;
-  setQuestionnaireResponse: (value: QuestionnaireResponse | null) => void;
+  setQuestionnaire: (value: fhir4.Questionnaire | null) => void;
+  setQuestionnaireResponse: (value: fhir4.QuestionnaireResponse | null) => void;
   advancePhase: (next: SmartMessagingPhase) => void;
 };
 

@@ -1,23 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import type {
   QuestionnaireContext,
   SdcUiChangedFocusPayload,
   SdcUiChangedQuestionnaireResponsePayload,
-} from "sdc-swm-protocol/src";
-import type { Questionnaire, QuestionnaireResponse } from "../fhir";
-import { INITIAL_PHASE, type SmartMessagingPhase } from "../phase";
+} from "sdc-smart-web-messaging";
+import {INITIAL_PHASE, type SmartMessagingPhase} from "../phase";
 import type {IncomingMessage, UseSmartMessagingOptions, UseSmartMessagingResult} from "../types";
-import { useBootstrap } from "./use-bootstrap";
-import { useCreateMessenger } from "./use-create-messenger";
-import { useHandler } from "./use-handler";
-import { useLatestRef } from "./use-latest-ref";
-import { usePhase } from "./use-phase";
-import { useRequiredPhaseHandler } from "./use-required-phase-handler";
+import {useBootstrap} from "./use-bootstrap";
+import {useCreateMessenger} from "./use-create-messenger";
+import {useHandler} from "./use-handler";
+import {useLatestRef} from "./use-latest-ref";
+import {usePhase} from "./use-phase";
+import {useRequiredPhaseHandler} from "./use-required-phase-handler";
 
 export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMessagingResult {
-  const [questionnaire, setQuestionnaireState] = useState<Questionnaire | null>(null);
+  const [questionnaire, setQuestionnaireState] = useState<fhir4.Questionnaire | null>(null);
   const [questionnaireResponse, setQuestionnaireResponseState] =
-    useState<QuestionnaireResponse | null>(null);
+    useState<fhir4.QuestionnaireResponse | null>(null);
   const [context, setContextState] = useState<QuestionnaireContext | null>(null);
   const [config, setConfigState] = useState<UseSmartMessagingResult["config"]>(null);
   const phaseRef = useRef<SmartMessagingPhase>(INITIAL_PHASE);
@@ -30,12 +29,12 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
   const handlerRef = useRef<(message: IncomingMessage) => void>(() => undefined);
   const { phase, advancePhase } = usePhase(phaseRef);
 
-  const setQuestionnaire = useCallback((value: Questionnaire | null) => {
+  const setQuestionnaire = useCallback((value: fhir4.Questionnaire | null) => {
     questionnaireRef.current = value;
     setQuestionnaireState(value);
   }, []);
 
-  const setQuestionnaireResponse = useCallback((value: QuestionnaireResponse | null) => {
+  const setQuestionnaireResponse = useCallback((value: fhir4.QuestionnaireResponse | null) => {
     responseRef.current = value;
     setQuestionnaireResponseState(value);
   }, []);
@@ -86,7 +85,7 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
   });
 
   const onQuestionnaireResponseChange = useCallback(
-    (response: QuestionnaireResponse) => {
+    (response: fhir4.QuestionnaireResponse) => {
       setQuestionnaireResponse(response);
       if (!messenger) return;
       messenger.sendEvent("sdc.ui.changedQuestionnaireResponse", {

@@ -1,4 +1,4 @@
-import type { LaunchContextItem, QuestionnaireContext } from "sdc-swm-protocol/src";
+import type { LaunchContextItem, QuestionnaireContext } from "sdc-smart-web-messaging";
 
 export function mergeLaunchContext(
   existing: LaunchContextItem[] = [],

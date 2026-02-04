@@ -1,16 +1,12 @@
 import { createRoot } from "react-dom/client";
 import { useEffect, useRef } from "react";
-import type {
-  QuestionnaireContext,
-  SdcConfigureRequest,
-  SdcRequestExtractRequest,
-  SdcUiChangedFocusPayload,
-} from "sdc-swm-protocol/src";
 import {
   SmartMessagingPhase,
+  type QuestionnaireContext,
+  type SdcConfigureRequest,
+  type SdcRequestExtractRequest,
+  type SdcUiChangedFocusPayload,
   type SmartMessagingError,
-  type Questionnaire,
-  type QuestionnaireResponse,
   useSmartMessaging,
 } from "sdc-smart-web-messaging-react";
 
@@ -20,8 +16,8 @@ if (!rootElement) {
 }
 
 type RendererState = {
-  questionnaire: Questionnaire | null;
-  questionnaireResponse: QuestionnaireResponse | null;
+  questionnaire: fhir4.Questionnaire | null;
+  questionnaireResponse: fhir4.QuestionnaireResponse | null;
   context: QuestionnaireContext | null;
   config: SdcConfigureRequest["payload"] | null;
   phase: SmartMessagingPhase;
@@ -29,7 +25,7 @@ type RendererState = {
 };
 
 type RendererActions = {
-  onQuestionnaireResponseChange: (response: QuestionnaireResponse) => void;
+  onQuestionnaireResponseChange: (response: fhir4.QuestionnaireResponse) => void;
   onFocusChange: (payload: SdcUiChangedFocusPayload) => void;
 };
 

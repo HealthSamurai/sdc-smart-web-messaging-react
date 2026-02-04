@@ -207,3 +207,8 @@ pnpm run typecheck
 ## License
 
 MIT
+
+## Third-Party Licenses
+
+This package embeds the SDC SMART Web Messaging protocol definitions from the
+`sdc-smart-web-messaging` project (BSD 3-Clause). See `dist/LICENSES/bsd-3-clause.txt`.
