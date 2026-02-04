@@ -1,5 +1,7 @@
 # sdc-smart-web-messaging-react
 
+[![bundle size](https://img.shields.io/bundlephobia/minzip/sdc-smart-web-messaging-react)](https://bundlephobia.com/package/sdc-smart-web-messaging-react)
+
 React hook and helpers for building SDC Questionnaire renderers that speak the SMART Web Messaging protocol.
 
 This library wraps the SDC SMART Web Messaging message flow in a small React-first API. It handles the initial handshake, listens for host requests, validates payloads, and exposes the current questionnaire, response, context, and configuration to your renderer.
