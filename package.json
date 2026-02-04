@@ -1,0 +1,41 @@
+{
+  "name": "sdc-smart-web-messaging-react",
+  "version": "0.1.0",
+  "type": "module",
+  "private": false,
+  "description": "React hook and helpers for SDC SMART Web Messaging renderers.",
+  "license": "MIT",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "vendor/sdc-smart-web-messaging/src"],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "lint": "biome check .",
+    "test:browser": "playwright test",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tests/tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit && tsc -p tests/tsconfig.node.json --noEmit"
+  },
+  "peerDependencies": {
+    "@types/fhir": "^0.0.41",
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.13.5",
+    "@types/react": "^18.3.27",
+    "@types/react-dom": "^18.3.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}
