@@ -5,6 +5,10 @@
   "private": false,
   "description": "React hook and helpers for SDC SMART Web Messaging renderers.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianpos/sdc-smart-web-messaging-react.git"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
