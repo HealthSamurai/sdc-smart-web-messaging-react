@@ -1,6 +1,6 @@
 {
   "name": "sdc-smart-web-messaging-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "private": false,
   "description": "React hook and helpers for SDC SMART Web Messaging renderers.",
