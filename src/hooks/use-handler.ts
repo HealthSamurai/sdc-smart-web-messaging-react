@@ -36,6 +36,7 @@ type UseHandlerParams = {
   setContext: (value: QuestionnaireContext | null) => void;
   setQuestionnaire: (value: fhir4.Questionnaire | null) => void;
   setQuestionnaireResponse: (value: fhir4.QuestionnaireResponse | null) => void;
+  setFhirVersion: (value: UseSmartMessagingResult["fhirVersion"]) => void;
   advancePhase: (next: SmartMessagingPhase) => void;
 };
 
@@ -50,6 +51,7 @@ export function useHandler({
   setContext,
   setQuestionnaire,
   setQuestionnaireResponse,
+  setFhirVersion,
   advancePhase,
 }: UseHandlerParams): Handler {
   return useMemo(() => {
@@ -62,6 +64,10 @@ export function useHandler({
 
       switch (messageType) {
         case "status.handshake": {
+          const payload = isRecord(message.payload) ? message.payload : {};
+          const fhirVersion =
+            typeof payload.fhirVersion === "string" ? payload.fhirVersion : null;
+          setFhirVersion(fhirVersion);
           sendResponse("status.handshake", message.messageId, {
             application: optionsRef.current.application,
             capabilities: optionsRef.current.capabilities,
@@ -313,6 +319,7 @@ export function useHandler({
     setContext,
     setQuestionnaire,
     setQuestionnaireResponse,
+    setFhirVersion,
     phaseRef,
   ]);
 }

@@ -4,7 +4,7 @@
 
 React hook and helpers for building SDC Questionnaire renderers that speak the SMART Web Messaging protocol.
 
-This library wraps the SDC SMART Web Messaging message flow in a small React-first API. It handles the initial handshake, listens for host requests, validates payloads, and exposes the current questionnaire, response, context, and configuration to your renderer.
+This library wraps the SDC SMART Web Messaging message flow in a small React-first API. It handles the handshake, listens for host requests, validates payloads, and exposes the current questionnaire, response, context, and configuration to your renderer.
 
 ## Install
 
@@ -38,8 +38,8 @@ export function RendererApp() {
 ```
 
 Notes for integration:
-The host launches the renderer with `messaging_handle` and `messaging_origin` query params. The hook reads these from `window.location.search` and will not handshake without them.
-The hook sends a `status.handshake` request once per mount. It also responds to host-initiated handshakes and never regresses phase.
+The host launches the renderer with `messaging_handle` and `messaging_origin` query params. The hook reads these from `window.location.search` and will not communicate without them.
+The hook does not initiate a `status.handshake`. It responds to host-initiated handshakes and never regresses phase.
 
 ## Examples
 
@@ -172,6 +172,7 @@ onFocusChange({ linkId: "patient-name", focus_field: "item[0].answer[0].value" }
 | `questionnaireResponse`         | `QuestionnaireResponse \| null`             | The current questionnaire response.                                              |
 | `context`                       | `QuestionnaireContext \| null`              | Context from `sdc.configureContext` plus any merged context in display messages. |
 | `config`                        | `SdcConfigureRequest["payload"] \| null`    | The last `sdc.configure` payload.                                                |
+| `fhirVersion`                   | `string \| null`                            | FHIR version received from the host `status.handshake` payload, if provided.     |
 | `phase`                         | `SmartMessagingPhase`                       | Current lifecycle phase (handshake → config → context → questionnaire → ready). |
 | `onQuestionnaireResponseChange` | `(response: QuestionnaireResponse) => void` | Sends `sdc.ui.changedQuestionnaireResponse` to the host and updates local phase. |
 | `onFocusChange`                 | `(payload: SdcUiChangedFocusPayload) => void` | Sends `sdc.ui.changedFocus` to the host.                                         |
@@ -184,7 +185,7 @@ Phase transitions:
 
 | Phase                                     | Advances when                                                             |
 |-------------------------------------------|---------------------------------------------------------------------------|
-| `SmartMessagingPhase.AwaitingHandshake`   | Renderer sends `status.handshake`, or host sends `status.handshake`       |
+| `SmartMessagingPhase.AwaitingHandshake`   | Host sends `status.handshake`                                             |
 | `SmartMessagingPhase.AwaitingConfig`      | `sdc.configure` accepted                                                  |
 | `SmartMessagingPhase.AwaitingContext`     | `sdc.configureContext` accepted                                           |
 | `SmartMessagingPhase.AwaitingQuestionnaire` | `sdc.displayQuestionnaire` or `sdc.displayQuestionnaireResponse` accepted |

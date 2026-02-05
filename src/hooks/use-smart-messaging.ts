@@ -4,9 +4,8 @@ import type {
   SdcUiChangedFocusPayload,
   SdcUiChangedQuestionnaireResponsePayload,
 } from "sdc-smart-web-messaging";
-import {INITIAL_PHASE, type SmartMessagingPhase} from "../phase";
+import {INITIAL_PHASE, SmartMessagingPhase} from "../phase";
 import type {IncomingMessage, UseSmartMessagingOptions, UseSmartMessagingResult} from "../types";
-import {useBootstrap} from "./use-bootstrap";
 import {useCreateMessenger} from "./use-create-messenger";
 import {useHandler} from "./use-handler";
 import {useLatestRef} from "./use-latest-ref";
@@ -19,12 +18,14 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
     useState<fhir4.QuestionnaireResponse | null>(null);
   const [context, setContextState] = useState<QuestionnaireContext | null>(null);
   const [config, setConfigState] = useState<UseSmartMessagingResult["config"]>(null);
+  const [fhirVersion, setFhirVersionState] = useState<UseSmartMessagingResult["fhirVersion"]>(
+    null,
+  );
   const phaseRef = useRef<SmartMessagingPhase>(INITIAL_PHASE);
   const questionnaireRef = useRef(questionnaire);
   const responseRef = useRef(questionnaireResponse);
   const contextRef = useRef(context);
   const configRef = useRef(config);
-  const handshakeSent = useRef(false);
   const optionsRef = useLatestRef(options);
   const handlerRef = useRef<(message: IncomingMessage) => void>(() => undefined);
   const { phase, advancePhase } = usePhase(phaseRef);
@@ -49,6 +50,10 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
     setConfigState(value);
   }, []);
 
+  const setFhirVersion = useCallback((value: UseSmartMessagingResult["fhirVersion"]) => {
+    setFhirVersionState(value);
+  }, []);
+
   const messenger = useCreateMessenger(handlerRef);
 
   const handler = useHandler({
@@ -62,6 +67,7 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
     setContext,
     setQuestionnaire,
     setQuestionnaireResponse,
+    setFhirVersion,
     advancePhase,
   });
 
@@ -76,13 +82,15 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
     handlerRef.current = guardedHandler;
   }, [guardedHandler]);
 
-  useBootstrap({
-    messenger,
-    phaseRef,
-    advancePhase,
-    optionsRef,
-    handshakeSent,
-  });
+  useEffect(() => {
+    if (!messenger && phaseRef.current !== SmartMessagingPhase.Disabled) {
+      advancePhase(SmartMessagingPhase.Disabled);
+      optionsRef.current.onError?.({
+        phase: phaseRef.current,
+        message: "Missing SDC SWM parameters.",
+      });
+    }
+  }, [messenger, advancePhase, optionsRef, phaseRef]);
 
   const onQuestionnaireResponseChange = useCallback(
     (response: fhir4.QuestionnaireResponse) => {
@@ -108,6 +116,7 @@ export function useSmartMessaging(options: UseSmartMessagingOptions): UseSmartMe
     questionnaireResponse,
     context,
     config,
+    fhirVersion,
     phase,
     onQuestionnaireResponseChange,
     onFocusChange,

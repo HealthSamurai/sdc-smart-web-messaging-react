@@ -65,6 +65,11 @@ async function sendRequest(
   );
 }
 
+async function ensureHandshake(page: Page) {
+  const handshakeId = await sendRequest(page, "status.handshake", {});
+  await waitForMessage(page, "status.handshake", handshakeId);
+}
+
 async function clearMessages(page: Page) {
   await page.evaluate(() => window.__host?.clearMessages());
 }
@@ -85,7 +90,7 @@ test("exchanges messages through a real iframe", async ({ page }) => {
   await waitForHost(page);
   const frame = await getRendererFrame(page);
 
-  await waitForMessage(page, "status.handshake");
+  await ensureHandshake(page);
   await clearMessages(page);
 
   const questionnaire = {
@@ -159,7 +164,7 @@ test("exchanges messages through a real iframe", async ({ page }) => {
 test("rejects out-of-order requests", async ({ page }) => {
   await page.goto("/");
   await waitForHost(page);
-  await waitForMessage(page, "status.handshake");
+  await ensureHandshake(page);
   await clearMessages(page);
 
   const questionnaire = {
@@ -184,7 +189,7 @@ test("rejects out-of-order requests", async ({ page }) => {
 test("returns error when questionnaire is missing", async ({ page }) => {
   await page.goto("/");
   await waitForHost(page);
-  await waitForMessage(page, "status.handshake");
+  await ensureHandshake(page);
   await clearMessages(page);
 
   const configId = await sendRequest(page, "sdc.configure", {
@@ -215,7 +220,7 @@ test("responds to host-initiated handshake without regressing phase", async ({ p
   await waitForHost(page);
   const frame = await getRendererFrame(page);
 
-  await waitForMessage(page, "status.handshake");
+  await ensureHandshake(page);
   await clearMessages(page);
 
   const questionnaire = {
@@ -245,7 +250,7 @@ test("returns extract results from the renderer", async ({ page }) => {
   await waitForHost(page);
   const frame = await getRendererFrame(page);
 
-  await waitForMessage(page, "status.handshake");
+  await ensureHandshake(page);
   await clearMessages(page);
 
   const questionnaire = {

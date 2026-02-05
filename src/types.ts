@@ -35,6 +35,7 @@ export type UseSmartMessagingResult = {
   questionnaireResponse: fhir4.QuestionnaireResponse | null;
   context: QuestionnaireContext | null;
   config: SdcConfigureRequest["payload"] | null;
+  fhirVersion: string | null;
   phase: SmartMessagingPhase;
   onQuestionnaireResponseChange: (response: fhir4.QuestionnaireResponse) => void;
   onFocusChange: (payload: SdcUiChangedFocusPayload) => void;

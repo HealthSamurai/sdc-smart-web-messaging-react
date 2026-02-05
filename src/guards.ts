@@ -38,10 +38,10 @@ export function resolveQuestionnaireResponse(payload: unknown): fhir4.Questionna
 export function isLaunchContextItem(value: unknown): value is LaunchContextItem {
   if (!isRecord(value)) return false;
   if (typeof value.name !== "string") return false;
-  if (value.contentReference !== undefined && !isRecord(value.contentReference)) {
+  if (value.contentReference != null && !isRecord(value.contentReference)) {
     return false;
   }
-  if (value.contentResource !== undefined && !isRecord(value.contentResource)) {
+  if (value.contentResource != null && !isRecord(value.contentResource)) {
     return false;
   }
   return true;
@@ -49,10 +49,10 @@ export function isLaunchContextItem(value: unknown): value is LaunchContextItem 
 
 export function isQuestionnaireContext(value: unknown): value is QuestionnaireContext {
   if (!isRecord(value)) return false;
-  if (value.subject !== undefined && !isRecord(value.subject)) return false;
-  if (value.author !== undefined && !isRecord(value.author)) return false;
-  if (value.encounter !== undefined && !isRecord(value.encounter)) return false;
-  if (value.launchContext !== undefined) {
+  if (value.subject != null && !isRecord(value.subject)) return false;
+  if (value.author != null && !isRecord(value.author)) return false;
+  if (value.encounter != null && !isRecord(value.encounter)) return false;
+  if (value.launchContext != null) {
     if (!Array.isArray(value.launchContext)) return false;
     if (!value.launchContext.every(isLaunchContextItem)) return false;
   }
@@ -61,13 +61,13 @@ export function isQuestionnaireContext(value: unknown): value is QuestionnaireCo
 
 export function isSdcConfigurePayload(value: unknown): value is SdcConfigureRequest["payload"] {
   if (!isRecord(value)) return false;
-  if (value.terminologyServer !== undefined && typeof value.terminologyServer !== "string") {
+  if (value.terminologyServer != null && typeof value.terminologyServer !== "string") {
     return false;
   }
-  if (value.dataServer !== undefined && typeof value.dataServer !== "string") {
+  if (value.dataServer != null && typeof value.dataServer !== "string") {
     return false;
   }
-  if (value.configuration !== undefined && !isRecord(value.configuration)) {
+  if (value.configuration != null && !isRecord(value.configuration)) {
     return false;
   }
   return true;
@@ -77,7 +77,7 @@ export function isSdcConfigureContextPayload(
   value: unknown,
 ): value is SdcConfigureContextRequest["payload"] {
   if (!isRecord(value)) return false;
-  if (value.context !== undefined && !isQuestionnaireContext(value.context)) {
+  if (value.context != null && !isQuestionnaireContext(value.context)) {
     return false;
   }
   return true;
@@ -90,16 +90,16 @@ export function isDisplayQuestionnairePayload(
 ): value is DisplayQuestionnairePayload {
   if (isQuestionnaire(value)) return true;
   if (!isRecord(value)) return false;
-  if (value.questionnaire !== undefined && !isQuestionnaire(value.questionnaire)) {
+  if (value.questionnaire != null && !isQuestionnaire(value.questionnaire)) {
     return false;
   }
   if (
-    value.questionnaireResponse !== undefined &&
+    value.questionnaireResponse != null &&
     !isQuestionnaireResponse(value.questionnaireResponse)
   ) {
     return false;
   }
-  if (value.context !== undefined && !isQuestionnaireContext(value.context)) {
+  if (value.context != null && !isQuestionnaireContext(value.context)) {
     return false;
   }
   return true;
@@ -115,12 +115,12 @@ export function isDisplayQuestionnaireResponsePayload(
   if (isQuestionnaireResponse(value)) return true;
   if (!isRecord(value)) return false;
   if (
-    value.questionnaireResponse !== undefined &&
+    value.questionnaireResponse != null &&
     !isQuestionnaireResponse(value.questionnaireResponse)
   ) {
     return false;
   }
-  if (value.questionnaire !== undefined && !isQuestionnaire(value.questionnaire)) {
+  if (value.questionnaire != null && !isQuestionnaire(value.questionnaire)) {
     return false;
   }
   return true;
