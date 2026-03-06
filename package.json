@@ -1,6 +1,6 @@
 {
   "name": "sdc-smart-web-messaging-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "private": false,
   "description": "Framework-agnostic SMART Web Messaging client with a React hook wrapper.",
